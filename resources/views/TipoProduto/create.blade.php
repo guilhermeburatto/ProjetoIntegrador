@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-    <form method="post" action="/tipoproduto">
+    <form method="post" action={{route('tipoproduto.store')}}>
         @csrf
         <div class="form-group">
           <label for="input-ID">ID</label>
@@ -21,6 +21,7 @@
           <input name="descricao" type="text" class="form-control" id="input-desc" placeholder="Informe a descrição do produto">
         </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
+        <a href={{route('tipoproduto.index')}} class="btn btn-primary">Voltar</a>
     </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

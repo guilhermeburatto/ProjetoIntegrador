@@ -8,7 +8,31 @@
     <title>Index de Tipo Produto</title>
 </head>
 <body>
-    <h1> Index de Tipo Produto </h1>
+    <div class="container">
+    <a href={{route('tipoproduto.create')}} class="btn btn-primary">Criar um Tipo de Produto</a>
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+            @foreach ($tipoProdutos as $tipoProduto)
+                <tr>
+                    <th scope="row">{{$tipoProduto->id}}</th>
+                    <td>{{$tipoProduto->descricao}}</td>      
+                    <td>
+                        <a href="#" class="btn btn-primary">Show</a>
+                        <a href="#" class="btn btn-info">Edit</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
+                    </td>              
+                </tr>
+            @endforeach
+      </table>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 </body>

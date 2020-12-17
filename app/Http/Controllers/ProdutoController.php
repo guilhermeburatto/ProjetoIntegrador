@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
+use App\Produto;
 
 class ProdutoController extends Controller
 {
@@ -23,7 +25,9 @@ class ProdutoController extends Controller
      */
     public function create()
     {
-        //
+        // Buscar os dados que estão na tabela Tipo_Produtos
+        $tipoProdutos = DB::select('select * from Tipo_Produtos');
+        return view('Produto.create')->with('tipoProdutos', $tipoProdutos);
     }
 
     /**
@@ -34,7 +38,15 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $produto = new Produto();
+        $produto->nome = $request->nome;
+        $produto->preco = $request->preco;
+        $produto->Tipo_Produtos_id = $request->Tipo_Produtos_id;
+        $produto->save();
+
+        // Chama o método create
+        $tipoProdutos = DB::select('select * from Tipo_Produtos');
+        return view('Produto.create')->with('tipoProdutos', $tipoProdutos);
     }
 
     /**

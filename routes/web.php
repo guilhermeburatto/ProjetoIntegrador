@@ -20,3 +20,4 @@ Route::get('/', function () {
 });
 
 Route::resource('tipoproduto', 'TipoProdutoController');
+Route::resource('produto', 'ProdutoController');

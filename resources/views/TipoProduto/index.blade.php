@@ -24,8 +24,8 @@
                     <th scope="row">{{$tipoProduto->id}}</th>
                     <td>{{$tipoProduto->descricao}}</td>      
                     <td>
-                        <a href="#" class="btn btn-primary">Show</a>
-                        <a href="#" class="btn btn-info">Edit</a>
+                        <a href={{route('tipoproduto.show', $tipoProduto->id)}} class="btn btn-primary">Show</a>
+                        <a href={{route('tipoproduto.edit', $tipoProduto->id)}} class="btn btn-primary">Edit</a>
                         <a href="#" class="btn btn-danger">Delete</a>
                     </td>              
                 </tr>

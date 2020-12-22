@@ -41,7 +41,8 @@ class TipoProdutoController extends Controller
         $tipoProduto = new TipoProduto();
         $tipoProduto->descricao = $request->descricao;
         $tipoProduto->save();
-        return view('TipoProduto.create');
+
+        return $this->index();
     }
 
     /**
@@ -52,7 +53,13 @@ class TipoProdutoController extends Controller
      */
     public function show($id)
     {
-        //
+        // Buscar os dados que estão na tabela Tipo_Produtos
+        $tipoProduto = TipoProduto::find($id);
+        if(isset($tipoProduto))
+            return view('TipoProduto.show')->with('tipoProduto', $tipoProduto);
+
+        // #TODO: ajustar a página de erro
+        return 'Not found';
     }
 
     /**
@@ -63,7 +70,13 @@ class TipoProdutoController extends Controller
      */
     public function edit($id)
     {
-        //
+        // Buscar os dados que estão na tabela Tipo_Produtos
+        $tipoProduto = TipoProduto::find($id);
+        if(isset($tipoProduto))
+            return view('TipoProduto.edit')->with('tipoProduto', $tipoProduto);
+
+        // #TODO: ajustar a página de erro
+        return 'Not found';
     }
 
     /**
@@ -75,7 +88,17 @@ class TipoProdutoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Buscar os dados que estão na tabela Tipo_Produtos
+        $tipoProduto = TipoProduto::find($id);
+        if(isset($tipoProduto))
+        {
+            $tipoProduto->descricao = $request->descricao;
+            $tipoProduto->update();
+            // Retorna a execução do método index
+            return $this->index();
+        }
+        // #TODO: ajustar a página de erro
+        return 'Not found';
     }
 
     /**

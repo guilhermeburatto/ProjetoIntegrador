@@ -20,8 +20,20 @@ class TipoProdutoController extends Controller
         return view('TipoProduto.index')->with('tipoProdutos', $tipoProdutos);
     }
 
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    private function indexError($error)
+    {
+        // Buscar os dados que estão na tabela Tipo_Produtos
+        $tipoProdutos = DB::select('select * from Tipo_Produtos');
+        return view('TipoProduto.index')->with('tipoProdutos', $tipoProdutos)->with('error', $error);
+    }
+
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource, with error message
      *
      * @return \Illuminate\Http\Response
      */
@@ -40,8 +52,14 @@ class TipoProdutoController extends Controller
     {
         $tipoProduto = new TipoProduto();
         $tipoProduto->descricao = $request->descricao;
-        $tipoProduto->save();
-
+        try {
+            $tipoProduto->save();
+        } catch (\Throwable $th) {
+            $error['type'] = 'danger';
+            $error['message'] = 'Problema ao salvar um recurso: ' . $th->getMessage();
+            return $this->indexError($error);
+        }
+        
         return $this->index();
     }
 
@@ -59,7 +77,9 @@ class TipoProdutoController extends Controller
             return view('TipoProduto.show')->with('tipoProduto', $tipoProduto);
 
         // #TODO: ajustar a página de erro
-        return 'Not found';
+        $error['type'] = 'danger';
+        $error['message'] = 'Recurso não encontrado';
+        return $this->indexError($error);
     }
 
     /**
@@ -76,7 +96,9 @@ class TipoProdutoController extends Controller
             return view('TipoProduto.edit')->with('tipoProduto', $tipoProduto);
 
         // #TODO: ajustar a página de erro
-        return 'Not found';
+        $error['type'] = 'danger';
+        $error['message'] = 'Recurso não encontrado';
+        return $this->indexError($error);
     }
 
     /**
@@ -93,12 +115,21 @@ class TipoProdutoController extends Controller
         if(isset($tipoProduto))
         {
             $tipoProduto->descricao = $request->descricao;
-            $tipoProduto->update();
+            try {
+                $tipoProduto->update();
+            } catch (\Throwable $th) {
+                $error['type'] = 'danger';
+                $error['message'] = 'Problema ao atualizar um recurso: ' . $th->getMessage();
+                return $this->indexError($error);
+            }
+
             // Retorna a execução do método index
             return $this->index();
         }
         // #TODO: ajustar a página de erro
-        return 'Not found';
+        $error['type'] = 'danger';
+        $error['message'] = 'Recurso não encontrado';
+        return $this->indexError($error);
     }
 
     /**
@@ -112,11 +143,20 @@ class TipoProdutoController extends Controller
         $tipoProduto = TipoProduto::find($id);
         if(isset($tipoProduto))
         {
-            $tipoProduto->delete();
+            try {
+                $tipoProduto->delete();
+            } catch (\Throwable $th) {
+                $error['type'] = 'danger';
+                $error['message'] = 'Problema ao remover um recurso: ' . $th->getMessage();
+                return $this->indexError($error);
+            }
+
             // Retorna a execução do método index
             return $this->index();
         }            
         // #TODO: ajustar a página de erro
-        return 'Not found';
+        $error['type'] = 'danger';
+        $error['message'] = 'Recurso não encontrado';
+        return $this->indexError($error);
     }
 }

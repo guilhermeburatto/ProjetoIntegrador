@@ -9,6 +9,14 @@
 </head>
 <body>
     <div class="container">
+        @if (isset($error))
+            <div class="alert alert-{{$error['type']}} alert-dismissible fade show" role="alert">
+                <strong>{{$error['message']}}.</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>            
+        @endif
     <a href={{route('tipoproduto.create')}} class="btn btn-primary">Criar um Tipo de Produto</a>
     <table class="table table-hover">
         <thead>
@@ -60,7 +68,7 @@
 
     <script>
         const destroyButtons = document.querySelectorAll(".destroyButton");
-        const destroyForm = document.querySelector(".#destroyForm");
+        const destroyForm = document.querySelector("#destroyForm");
         destroyButtons.forEach(destroyButton => {
             destroyButton.addEventListener('click', configureAction);              
         });
